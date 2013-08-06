@@ -240,8 +240,19 @@ package com.childoftv.xlsxreader
 			else
 			{
 				
-				
-				return sharedStrings().child(index).t.toString();;
+				//return sharedStrings().child(index).t.toString();;
+				/* where shareString.xml child t is empty, get string from child r -> t */
+				var t:String = sharedStrings().child(index).t.toString();
+				if(t == ""){
+					if(sharedStrings().child(index).r.t != null){
+						for(var i:int=0;i < XMLList(sharedStrings().child(index).r.t).length();i++){
+							t += sharedStrings().child(index).r.t[i];
+						}
+					}
+					return t;
+				}else{
+					return t;
+				}
 			}
 		}
 		private function retrieveXML(path:String):XML
